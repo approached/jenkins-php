@@ -29,11 +29,45 @@ RUN apt-get -qqy install \
     sqlite3
 
 # jenkins plugins
-ADD https://updates.jenkins-ci.org/download/plugins/git-client/latest/git-client.hpi /usr/share/jenkins/ref/plugins/git-client.hpi
-ADD https://updates.jenkins-ci.org/download/plugins/git/latest/git.hpi /usr/share/jenkins/ref/plugins/git.hpi
-ADD https://updates.jenkins-ci.org/download/plugins/github-api/latest/github-api.hpi /usr/share/jenkins/ref/plugins/github-api.hpi
-ADD https://updates.jenkins-ci.org/download/plugins/github/latest/github.hpi /usr/share/jenkins/ref/plugins/github.hpi
-ADD https://updates.jenkins-ci.org/download/plugins/ansicolor/latest/ansicolor.hpi /usr/share/jenkins/ref/plugins/ansicolor.hpi
+ADD https://updates.jenkins-ci.org/latest/git-client.hpi /var/lib/jenkins/plugins/git-client.hpi
+ADD https://updates.jenkins-ci.org/latest/git.hpi /var/lib/jenkins/plugins/git.hpi
+ADD https://updates.jenkins-ci.org/latest/github-api.hpi /var/lib/jenkins/plugins/github-api.hpi
+ADD https://updates.jenkins-ci.org/latest/github.hpi /var/lib/jenkins/plugins/github.hpi
+ADD https://updates.jenkins-ci.org/latest/ansicolor.hpi /var/lib/jenkins/plugins/ansicolor.hpi
+ADD https://updates.jenkins-ci.org/latest/checkstyle.hpi /var/lib/jenkins/plugins/checkstyle.hpi
+ADD https://updates.jenkins-ci.org/latest/cloverphp.hpi /var/lib/jenkins/plugins/cloverphp.hpi
+ADD https://updates.jenkins-ci.org/latest/crap4j.hpi /var/lib/jenkins/plugins/crap4j.hpi
+ADD https://updates.jenkins-ci.org/latest/dry.hpi /var/lib/jenkins/plugins/dry.hpi
+ADD https://updates.jenkins-ci.org/latest/htmlpublisher.hpi /var/lib/jenkins/plugins/htmlpublisher.hpi
+ADD https://updates.jenkins-ci.org/latest/jdepend.hpi /var/lib/jenkins/plugins/jdepend.hpi
+ADD https://updates.jenkins-ci.org/latest/plot.hpi /var/lib/jenkins/plugins/plot.hpi
+ADD https://updates.jenkins-ci.org/latest/pmd.hpi /var/lib/jenkins/plugins/pmd.hpi
+ADD https://updates.jenkins-ci.org/latest/violations.hpi /var/lib/jenkins/plugins/violations.hpi
+ADD https://updates.jenkins-ci.org/latest/xunit.hpi /var/lib/jenkins/plugins/xunit.hpi
+ADD https://updates.jenkins-ci.org/latest/warnings.hpi /var/lib/jenkins/plugins/warnings.hpi
+ADD https://updates.jenkins-ci.org/latest/slack.hpi /var/lib/jenkins/plugins/slack.hpi
+ADD https://updates.jenkins-ci.org/latest/postbuild-task.hpi /var/lib/jenkins/plugins/postbuild-task.hpi
+ADD https://updates.jenkins-ci.org/latest/postbuildscript.hpi /var/lib/jenkins/plugins/postbuildscript.hpi
+ADD https://updates.jenkins-ci.org/latest/greenballs.hpi /var/lib/jenkins/plugins/greenballs.hpi
+ADD https://updates.jenkins-ci.org/latest/email-ext.hpi /var/lib/jenkins/plugins/email-ext.hpi
+ADD https://updates.jenkins-ci.org/latest/token-macro.hpi /var/lib/jenkins/plugins/token-macro.hpi
+ADD https://updates.jenkins-ci.org/latest/analysis-core.hpi /var/lib/jenkins/plugins/analysis-core.hpi
+ADD https://updates.jenkins-ci.org/latest/ansible.hpi /var/lib/jenkins/plugins/ansible.hpi
+
+# jenkins templates
+ADD https://raw.github.com/sebastianbergmann/php-jenkins-template/master/config.xml /var/lib/jenkins/jobs/php-template/config.xml
+RUN chown -R jenkins /var/lib/jenkins
+
+# php modules
+RUN  mkdir -p /usr/bin \
+  && wget -q -O /usr/bin/phpunit https://phar.phpunit.de/phpunit.phar && chmod +x /usr/bin/phpunit \
+  && wget -q -O /usr/bin/composer https://getcomposer.org/composer.phar && chmod +x /usr/bin/composer \
+  && wget -q -O /usr/bin/phpmd http://static.phpmd.org/php/latest/phpmd.phar && chmod +x /usr/bin/phpmd \
+  && wget -q -O /usr/bin/sami http://get.sensiolabs.org/sami.phar && chmod +x /usr/bin/sami \
+  && wget -q -O /usr/bin/phpcov https://phar.phpunit.de/phpcov.phar && chmod +x /usr/bin/phpcov \
+  && wget -q -O /usr/bin/phpcpd https://phar.phpunit.de/phpcpd.phar && chmod +x /usr/bin/phpcpd \
+  && wget -q -O /usr/bin/phploc https://phar.phpunit.de/phploc.phar && chmod +x /usr/bin/phploc \
+  && wget -q -O /usr/bin/phptok https://phar.phpunit.de/phptok.phar && chmod +x /usr/bin/phptok
 
 # start jenkins
 RUN echo "service jenkins start" >> /run_all.sh; \echo "service jenkins start" >> /run_all.sh; \
