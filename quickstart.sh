@@ -1,11 +1,11 @@
 # build
-docker build -t jenkins_php .
-docker run --name jenkins_php -d -p 8080:8080 jenkins_php
-sleep 10
-docker stop jenkins_php
+docker-compose  -f docker-initial.yml up -d
+sleep 15
+docker-compose stop
 
 # copy settings
-docker cp jenkins_php:/var/lib/jenkins/ data
+docker cp jenkinsphp_jenkins_1:/var/lib/jenkins/ data
+chmod 755 data/ -R
 
 # run in background
 docker-compose up -d
