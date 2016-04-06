@@ -9,6 +9,7 @@ RUN apt-get -qqy install wget software-properties-common language-pack-en-base
 RUN wget -q -O - https://jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -
 RUN sh -c 'echo deb http://pkg.jenkins-ci.org/debian binary/ > /etc/apt/sources.list.d/jenkins.list'
 RUN apt-add-repository ppa:ansible/ansible
+RUN apt-add-repository ppa:git-core/ppa
 RUN LC_ALL=en_US.UTF-8 add-apt-repository ppa:ondrej/php
 
 # software
@@ -26,7 +27,10 @@ RUN apt-get -qqy install \
     php7.0-mbstring \
     jenkins \
     ansible \
-    sqlite3
+    sqlite3 \
+    git \
+    ant \
+    unzip
 
 # jenkins plugins
 ADD https://updates.jenkins-ci.org/latest/git-client.hpi /var/lib/jenkins/plugins/git-client.hpi
@@ -53,6 +57,7 @@ ADD https://updates.jenkins-ci.org/latest/email-ext.hpi /var/lib/jenkins/plugins
 ADD https://updates.jenkins-ci.org/latest/token-macro.hpi /var/lib/jenkins/plugins/token-macro.hpi
 ADD https://updates.jenkins-ci.org/latest/analysis-core.hpi /var/lib/jenkins/plugins/analysis-core.hpi
 ADD https://updates.jenkins-ci.org/latest/ansible.hpi /var/lib/jenkins/plugins/ansible.hpi
+ADD https://updates.jenkins-ci.org/latest/slack.hpi /var/lib/jenkins/plugins/slack.hpi
 
 # jenkins templates
 ADD https://raw.github.com/sebastianbergmann/php-jenkins-template/master/config.xml /var/lib/jenkins/jobs/php-template/config.xml
