@@ -24,12 +24,18 @@ RUN apt-get -qqy install \
     php7.0-sqlite3 \ 
     php7.0-xsl \
     php7.0-common \
+    php7.0-bz2 \
     php7.0-mbstring \
     jenkins \
     ansible \
     sqlite3 \
     git \
     ant \
+    curl \
+    rsync \
+    language-pack-en \
+    language-pack-de \
+    language-pack-es \
     unzip
 
 # jenkins plugins
@@ -72,7 +78,15 @@ RUN  mkdir -p /usr/bin \
   && wget -q -O /usr/bin/phpcov https://phar.phpunit.de/phpcov.phar && chmod +x /usr/bin/phpcov \
   && wget -q -O /usr/bin/phpcpd https://phar.phpunit.de/phpcpd.phar && chmod +x /usr/bin/phpcpd \
   && wget -q -O /usr/bin/phploc https://phar.phpunit.de/phploc.phar && chmod +x /usr/bin/phploc \
+  && wget -q -O /usr/bin/pdepend http://static.pdepend.org/php/latest/pdepend.phar && chmod +x /usr/bin/pdepend \
+  && wget -q -O /usr/bin/phpcs https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar && chmod +x /usr/bin/phpcs \
+&& wget -q -O /usr/bin/phpcb https://github.com/mayflower/PHP_CodeBrowser/releases/download/1.1.1/phpcb-1.1.1.phar && chmod +x /usr/bin/phpcb \
   && wget -q -O /usr/bin/phptok https://phar.phpunit.de/phptok.phar && chmod +x /usr/bin/phptok
+
+# Nodejs
+RUN curl -sL https://deb.nodesource.com/setup_4.x | bash -
+RUN apt-get install -y nodejs
+RUN npm install -g gulp
 
 # start jenkins
 RUN echo "service jenkins start" >> /run_all.sh; \echo "service jenkins start" >> /run_all.sh; \
