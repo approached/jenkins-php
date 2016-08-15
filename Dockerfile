@@ -1,6 +1,9 @@
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 
 MAINTAINER Alexej Kloos "alexejkloos@gmail.com"
+
+# update
+RUN apt-get update
 
 # Timezone
 RUN echo "Europe/Berlin" > /etc/timezone
@@ -10,7 +13,7 @@ RUN dpkg-reconfigure -f noninteractive tzdata
 RUN apt-get -qqy install wget software-properties-common language-pack-en-base
 
 # sources
-RUN wget -q -O - https://jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -
+RUN wget -q -O - https://jenkins-ci.org/debian/jenkins-ci.org.key | apt-key add -
 RUN sh -c 'echo deb http://pkg.jenkins-ci.org/debian binary/ > /etc/apt/sources.list.d/jenkins.list'
 RUN apt-add-repository ppa:ansible/ansible
 RUN apt-add-repository ppa:git-core/ppa
