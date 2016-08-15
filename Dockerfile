@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:14.04
 
 MAINTAINER Alexej Kloos "alexejkloos@gmail.com"
 
