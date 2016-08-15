@@ -2,6 +2,10 @@ FROM ubuntu:14.04
 
 MAINTAINER Alexej Kloos "alexejkloos@gmail.com"
 
+# Timezone
+RUN echo "Europe/Berlin" > /etc/timezone
+RUN dpkg-reconfigure -f noninteractive tzdata
+
 # dependencies
 RUN apt-get -qqy install wget software-properties-common language-pack-en-base
 
@@ -13,7 +17,7 @@ RUN apt-add-repository ppa:git-core/ppa
 RUN LC_ALL=en_US.UTF-8 add-apt-repository ppa:ondrej/php
 
 # software
-RUN apt-get -qqy update
+RUN apt-get update
 RUN apt-get -qqy install \
     php7.0-cli \ 
     php7.0-intl \
@@ -36,7 +40,9 @@ RUN apt-get -qqy install \
     language-pack-en \
     language-pack-de \
     language-pack-es \
-    unzip
+    unzip \
+    pngquant \
+    jpegoptim
 
 # jenkins plugins
 ADD https://updates.jenkins-ci.org/latest/git-client.hpi /var/lib/jenkins/plugins/git-client.hpi
