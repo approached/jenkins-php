@@ -97,9 +97,40 @@ RUN curl -sL https://deb.nodesource.com/setup_4.x | bash -
 RUN apt-get install -y nodejs
 RUN npm install -g gulp
 
+RUN echo "Europe/Berlin" > /etc/timezone
+RUN dpkg-reconfigure -f noninteractive tzdata
+
+# ffmpeg
+RUN apt-add-repository ppa:mc3man/trusty-media
+RUN apt-get update
+RUN apt-get -qqy install \
+	ffmpeg \
+	libvo-aacenc0 \
+	libaacs0
+
+RUN apt-get -qqy install \
+	libsdl1.2-dev \
+	zlib1g-dev \
+	libfaad-dev \
+	libgsm1-dev \
+	libtheora-dev \
+	libvorbis-dev \
+	libspeex-dev \
+	libopencore-amrwb-dev \
+	libopencore-amrnb-dev \
+	libxvidcore-dev \
+	libxvidcore4 \
+	libmp3lame-dev \
+	libjpeg62 \
+	libjpeg62-dev
+
 # start jenkins
 RUN echo "service jenkins start" >> /run_all.sh; \echo "service jenkins start" >> /run_all.sh; \
   echo "tail -f /var/log/jenkins/jenkins.log;" >> /run_all.sh
+
+RUN echo "Europe/Berlin" > /etc/timezone
+RUN dpkg-reconfigure -f noninteractive tzdata
+
 
 # listen
 EXPOSE 8080
