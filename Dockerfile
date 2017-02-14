@@ -68,7 +68,7 @@ ADD https://updates.jenkins-ci.org/latest/slack.hpi /var/lib/jenkins/plugins/sla
 ADD https://updates.jenkins-ci.org/latest/postbuild-task.hpi /var/lib/jenkins/plugins/postbuild-task.hpi
 ADD https://updates.jenkins-ci.org/latest/postbuildscript.hpi /var/lib/jenkins/plugins/postbuildscript.hpi
 ADD https://updates.jenkins-ci.org/latest/greenballs.hpi /var/lib/jenkins/plugins/greenballs.hpi
-ADD https://updates.jenkins-ci.org/latest/email-ext.hpi /var/lib/jenkins/plugins/email-ext.hpi
+ADD http://archives.jenkins-ci.org/plugins/email-ext/latest/email-ext.hpi /var/lib/jenkins/plugins/email-ext.hpi
 ADD https://updates.jenkins-ci.org/latest/token-macro.hpi /var/lib/jenkins/plugins/token-macro.hpi
 ADD https://updates.jenkins-ci.org/latest/analysis-core.hpi /var/lib/jenkins/plugins/analysis-core.hpi
 ADD https://updates.jenkins-ci.org/latest/ansible.hpi /var/lib/jenkins/plugins/ansible.hpi
@@ -89,7 +89,7 @@ RUN  mkdir -p /usr/bin \
   && wget -q -O /usr/bin/phploc https://phar.phpunit.de/phploc.phar && chmod +x /usr/bin/phploc \
   && wget -q -O /usr/bin/pdepend http://static.pdepend.org/php/latest/pdepend.phar && chmod +x /usr/bin/pdepend \
   && wget -q -O /usr/bin/phpcs https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar && chmod +x /usr/bin/phpcs \
-&& wget -q -O /usr/bin/phpcb https://github.com/mayflower/PHP_CodeBrowser/releases/download/1.1.1/phpcb-1.1.1.phar && chmod +x /usr/bin/phpcb \
+  && wget -q -O /usr/bin/phpcb https://github.com/mayflower/PHP_CodeBrowser/releases/download/1.1.1/phpcb-1.1.1.phar && chmod +x /usr/bin/phpcb \
   && wget -q -O /usr/bin/phptok https://phar.phpunit.de/phptok.phar && chmod +x /usr/bin/phptok
 
 # Nodejs
@@ -99,6 +99,12 @@ RUN npm install -g gulp
 
 RUN echo "Europe/Berlin" > /etc/timezone
 RUN dpkg-reconfigure -f noninteractive tzdata
+
+# Yarn 
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+RUN sh -c 'echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list'
+RUN apt-get update
+RUN apt-get install -y yarn
 
 # ffmpeg
 RUN apt-add-repository ppa:mc3man/trusty-media
@@ -130,7 +136,6 @@ RUN echo "service jenkins start" >> /run_all.sh; \echo "service jenkins start" >
 
 RUN echo "Europe/Berlin" > /etc/timezone
 RUN dpkg-reconfigure -f noninteractive tzdata
-
 
 # listen
 EXPOSE 8080
