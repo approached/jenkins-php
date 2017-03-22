@@ -17,7 +17,9 @@ RUN wget -q -O - https://jenkins-ci.org/debian/jenkins-ci.org.key | apt-key add 
 RUN sh -c 'echo deb http://pkg.jenkins-ci.org/debian binary/ > /etc/apt/sources.list.d/jenkins.list'
 RUN apt-add-repository ppa:ansible/ansible
 RUN apt-add-repository ppa:git-core/ppa
-RUN LC_ALL=en_US.UTF-8 add-apt-repository ppa:ondrej/php
+#@RUN LC_ALL=en_US.UTF-8 add-apt-repository ppa:ondrej/php
+RUN add-apt-repository ppa:ondrej/php
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C
 
 # software
 RUN apt-get update
@@ -33,6 +35,7 @@ RUN apt-get -qqy install \
     php7.0-common \
     php7.0-bz2 \
     php7.0-mbstring \
+    php7.0-zip \
     jenkins \
     ansible \
     sqlite3 \
@@ -93,7 +96,9 @@ RUN  mkdir -p /usr/bin \
   && wget -q -O /usr/bin/phptok https://phar.phpunit.de/phptok.phar && chmod +x /usr/bin/phptok
 
 # Nodejs
-RUN curl -sL https://deb.nodesource.com/setup_4.x | bash -
+#RUN curl -sL https://deb.nodesource.com/setup_4.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
+#RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
 RUN apt-get install -y nodejs
 RUN npm install -g gulp
 
