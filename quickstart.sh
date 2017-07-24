@@ -5,7 +5,7 @@ docker-compose stop
 
 # copy settings
 docker cp jenkinsphp_jenkins_1:/var/lib/jenkins/ data
-chmod 777 data/ -R
+chmod -R 777 data/
 
 # run in background
 docker-compose up -d

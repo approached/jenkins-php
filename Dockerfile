@@ -1,36 +1,45 @@
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 
 MAINTAINER Alexej Kloos "alexejkloos@gmail.com"
 
 # update
 RUN apt-get update
 
+# dependencies
+RUN apt-get -qqy install \
+    tzdata \
+    wget \
+    curl \
+    apt-transport-https \
+    software-properties-common \
+    language-pack-en-base
+
 # Timezone
 RUN echo "Europe/Berlin" > /etc/timezone
-RUN dpkg-reconfigure -f noninteractive tzdata
-
-# dependencies
-RUN apt-get -qqy install wget software-properties-common language-pack-en-base
+RUN dpkg-reconfigure --frontend noninteractive tzdata
 
 # sources
 RUN wget -q -O - https://jenkins-ci.org/debian/jenkins-ci.org.key | apt-key add -
 RUN sh -c 'echo deb http://pkg.jenkins-ci.org/debian binary/ > /etc/apt/sources.list.d/jenkins.list'
 RUN apt-add-repository ppa:ansible/ansible
 RUN apt-add-repository ppa:git-core/ppa
-#@RUN LC_ALL=en_US.UTF-8 add-apt-repository ppa:ondrej/php
-RUN add-apt-repository ppa:ondrej/php
+# PHP
+RUN LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C
+# Yarn
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN sh -c 'echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list'
 
 # software
 RUN apt-get update
 RUN apt-get -qqy install \
-    php7.0-cli \ 
+    php7.0-cli \
     php7.0-intl \
     php7.0-mcrypt \
-    php7.0-mysql \ 
+    php7.0-mysql \
     php7.0-gd \
     php7.0-curl \
-    php7.0-sqlite3 \ 
+    php7.0-sqlite3 \
     php7.0-xsl \
     php7.0-common \
     php7.0-bz2 \
@@ -41,14 +50,14 @@ RUN apt-get -qqy install \
     sqlite3 \
     git \
     ant \
-    curl \
     rsync \
     language-pack-en \
     language-pack-de \
     language-pack-es \
     unzip \
     pngquant \
-    jpegoptim
+    jpegoptim \
+    yarn
 
 # jenkins plugins
 ADD https://updates.jenkins-ci.org/latest/git-client.hpi /var/lib/jenkins/plugins/git-client.hpi
@@ -69,7 +78,7 @@ ADD https://updates.jenkins-ci.org/latest/xunit.hpi /var/lib/jenkins/plugins/xun
 ADD https://updates.jenkins-ci.org/latest/warnings.hpi /var/lib/jenkins/plugins/warnings.hpi
 ADD https://updates.jenkins-ci.org/latest/slack.hpi /var/lib/jenkins/plugins/slack.hpi
 ADD https://updates.jenkins-ci.org/latest/postbuild-task.hpi /var/lib/jenkins/plugins/postbuild-task.hpi
-ADD https://updates.jenkins-ci.org/latest/postbuildscript.hpi /var/lib/jenkins/plugins/postbuildscript.hpi
+#ADD https://updates.jenkins-ci.org/latest/postbuildscript.hpi /var/lib/jenkins/plugins/postbuildscript.hpi
 ADD https://updates.jenkins-ci.org/latest/greenballs.hpi /var/lib/jenkins/plugins/greenballs.hpi
 ADD http://archives.jenkins-ci.org/plugins/email-ext/latest/email-ext.hpi /var/lib/jenkins/plugins/email-ext.hpi
 ADD https://updates.jenkins-ci.org/latest/token-macro.hpi /var/lib/jenkins/plugins/token-macro.hpi
@@ -96,52 +105,37 @@ RUN  mkdir -p /usr/bin \
   && wget -q -O /usr/bin/phptok https://phar.phpunit.de/phptok.phar && chmod +x /usr/bin/phptok
 
 # Nodejs
-#RUN curl -sL https://deb.nodesource.com/setup_4.x | bash -
 RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
-#RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
 RUN apt-get install -y nodejs
 RUN npm install -g gulp
 
-RUN echo "Europe/Berlin" > /etc/timezone
-RUN dpkg-reconfigure -f noninteractive tzdata
-
-# Yarn 
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-RUN sh -c 'echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list'
-RUN apt-get update
-RUN apt-get install -y yarn
-
 # ffmpeg
-RUN apt-add-repository ppa:mc3man/trusty-media
-RUN apt-get update
 RUN apt-get -qqy install \
 	ffmpeg \
 	libvo-aacenc0 \
 	libaacs0
-
 RUN apt-get -qqy install \
-	libsdl1.2-dev \
-	zlib1g-dev \
-	libfaad-dev \
-	libgsm1-dev \
-	libtheora-dev \
-	libvorbis-dev \
-	libspeex-dev \
-	libopencore-amrwb-dev \
-	libopencore-amrnb-dev \
-	libxvidcore-dev \
-	libxvidcore4 \
-	libmp3lame-dev \
-	libjpeg62 \
-	libjpeg62-dev
+    libsdl1.2debian \
+    zlib1g \
+    libfaad2 \
+    libgsm1 \
+    libtheora0 \
+    libvorbis0a \
+    libspeex1 \
+    libopencore-amrwb0 \
+    libopencore-amrnb0 \
+    libxvidcore4 \
+    libmp3lame0 \
+    libjpeg62
 
 # start jenkins
 RUN echo "service jenkins start" >> /run_all.sh; \echo "service jenkins start" >> /run_all.sh; \
   echo "tail -f /var/log/jenkins/jenkins.log;" >> /run_all.sh
 
+# Timezone
 RUN echo "Europe/Berlin" > /etc/timezone
-RUN dpkg-reconfigure -f noninteractive tzdata
+RUN dpkg-reconfigure --frontend noninteractive tzdata
 
-# listen
+## listen
 EXPOSE 8080
 CMD ["sh", "/run_all.sh"]
