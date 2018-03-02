@@ -1,7 +1,5 @@
 # build
-docker-compose  -f docker-initial.yml up -d
-sleep 30
-docker-compose stop
+docker-compose -f docker-initial.yml up --build
 
 # copy settings
 docker cp jenkinsphp_jenkins_1:/var/lib/jenkins/ data

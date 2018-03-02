@@ -3,4 +3,4 @@ jenkins:
   ports:
     - "8080:8080"
   volumes:
-    - data:/var/lib/jenkins/
+    - ./data:/var/lib/jenkins/
