@@ -44,6 +44,11 @@ docker-compose up -d
 Rebuild Package
 ```
 docker-compose stop
+
+Remove failed files:
+find data/jobs/ -type l -delete
+rm -rf /opt/jenkins-php/data/jobs/IALaravel/workspace/*
+
 docker-compose build
 docker-compose up -d
 ```
