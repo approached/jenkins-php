@@ -1,6 +1,7 @@
 jenkins:
   build: .
+  container_name: jenkins-php
+  environment:
+    - JAVA_OPTS=-Dhudson.footerURL=https://github.com/approached/jenkins-php
   ports:
     - "8080:8080"
-  volumes:
-    - ./data:/var/lib/jenkins/
