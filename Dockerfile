@@ -74,4 +74,4 @@ USER jenkins
 
 # install jenkins-php recommended plugins https://plugins.jenkins.io/ - https://updates.jenkins.io/2.164/latest/
 RUN install-plugins.sh credentials-binding github-branch-source blueocean thinBackup slack workflow-aggregator \
-    checkstyle cloverphp crap4j dry htmlpublisher jdepend plot pmd violations warnings xunit
+    checkstyle clover crap4j dry htmlpublisher jdepend plot pmd violations warnings xunit
