@@ -23,6 +23,7 @@ RUN apt-get -qqy install \
     php7.2-bcmath \
     php7.2-intl \
     php-sodium \
+    php7.2-imagick \
     php7.2-mysql \
     php7.2-gd \
     php7.2-curl \
