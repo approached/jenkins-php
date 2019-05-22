@@ -50,6 +50,7 @@ RUN npm install -g gulp
 # meta packages
 RUN apt-get -qqy install \
     sqlite3 \
+    imagemagick \
     git \
     ant \
     rsync \
