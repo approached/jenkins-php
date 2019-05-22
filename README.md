@@ -24,4 +24,4 @@ Backup data: `./backup.sh`
 
 Delete docker stuff: `./delete.sh`
 
-Attach container: `docker exec -it "jenkins-php" /bin/bash`
+Attach container: `docker exec -it --user root "jenkins-php" /bin/bash`
