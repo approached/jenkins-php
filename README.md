@@ -16,6 +16,10 @@ docker-compose up -d
 
 ## Misc
 
+Install Docker: https://docs.docker.com/install/linux/docker-ce/ubuntu/
+
+Install Docker Compose: https://docs.docker.com/compose/install/
+
 Backup data: `./backup.sh`
 
 Delete docker stuff: `./delete.sh`
