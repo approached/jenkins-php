@@ -2,6 +2,6 @@ jenkins:
   build: .
   container_name: jenkins-php
   environment:
-    - JAVA_OPTS=-Dhudson.footerURL=https://github.com/approached/jenkins-php
+    - JAVA_OPTS=-Dhudson.footerURL=https://github.com/approached/jenkins-php -Duser.timezone=Europe/Berlin
   ports:
     - "8080:8080"
