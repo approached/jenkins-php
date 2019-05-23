@@ -7,12 +7,6 @@ USER root
 RUN apt-get update
 RUN apt-get upgrade
 
-# ansible  https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#latest-releases-via-apt-debian
-RUN sh -c 'echo deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main > /etc/apt/sources.list.d/ansible.list'
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367
-RUN apt-get update
-RUN apt-get install  -qqy ansible
-
 # php
 RUN apt-get install -qqy ca-certificates apt-transport-https
 RUN wget -q https://packages.sury.org/php/apt.gpg -O- |  apt-key add -
@@ -46,9 +40,6 @@ RUN sh -c 'echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/
 RUN apt-get update
 RUN apt-get install -y yarn
 
-# legacy
-RUN npm install -g gulp
-
 # meta packages
 RUN apt-get -qqy install \
     aptitude \
@@ -68,11 +59,14 @@ RUN apt-get -qqy install \
 # composer
 RUN wget -q -O /usr/bin/composer https://getcomposer.org/composer.phar && chmod +x /usr/bin/composer
 
+# legacy
+RUN npm install -g gulp
+
 # ansible
 RUN sh -c 'echo "deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main" | tee /etc/apt/sources.list.d/ansible.list'
 RUN apt-key adv --keyserver keyserver.ubuntu.com --no-tty --recv-keys 93C4A3FD7BB9C367
 RUN apt update
-RUN apt install ansible
+RUN apt install -qqy ansible
 
 # alias
 RUN echo "alias ll='ls $LS_OPTIONS -la --color=auto'" >>  /etc/profile
@@ -86,5 +80,20 @@ RUN echo "PS1='${debian_chroot:+($debian_chroot)}\[\033[01;31m\]\u\[\033[01;33m\
 USER jenkins
 
 # install jenkins-php recommended plugins https://plugins.jenkins.io/ - https://updates.jenkins.io/2.164/latest/
-RUN install-plugins.sh ansible credentials-binding github-branch-source blueocean thinBackup slack workflow-aggregator \
-    checkstyle clover crap4j dry htmlpublisher jdepend plot pmd violations warnings xunit
+RUN install-plugins.sh \
+    credentials-binding \
+    github-branch-source \
+    blueocean \
+    slack \
+    workflow-aggregator \
+    checkstyle \
+    clover \
+    crap4j \
+    dry \
+    htmlpublisher \
+    jdepend \
+    plot \
+    pmd \
+    violations \
+    warnings \
+    xunit
