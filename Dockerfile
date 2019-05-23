@@ -26,6 +26,7 @@ RUN apt-get -qqy install \
     php7.2-imagick \
     php7.2-mysql \
     php7.2-gd \
+    php7.2-phpdbg \
     php7.2-curl \
     php7.2-sqlite3 \
     php7.2-xsl \
