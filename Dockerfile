@@ -72,6 +72,15 @@ RUN wget -q -O /usr/bin/composer https://getcomposer.org/composer.phar && chmod 
 RUN echo "Europe/Berlin" | tee /etc/timezone
 RUN dpkg-reconfigure --frontend noninteractive tzdata
 
+# alias
+RUN echo "alias ll='ls $LS_OPTIONS -la --color=auto'" >>  /etc/profile
+RUN echo "alias jen='cd /var/jenkins_home/'" >>  /etc/profile
+RUN echo "" >>  /etc/profile
+RUN echo "# color prompt" >>  /etc/profile
+RUN echo "force_color_prompt=ye" >>  /etc/profile
+RUN echo "PS1='${debian_chroot:+($debian_chroot)}\[\033[01;31m\]\u\[\033[01;33m\]@\[\033[01;36m\]\h \[\033[01;33m\]\w \[\033[01;35m\]\$ \[\033[00m\]'" >>  /etc/profile
+RUN source /etc/profile
+
 # drop back to the regular jenkins user - good practice
 USER jenkins
 
