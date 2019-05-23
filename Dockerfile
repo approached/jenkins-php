@@ -68,10 +68,6 @@ RUN apt-get -qqy install \
 # composer
 RUN wget -q -O /usr/bin/composer https://getcomposer.org/composer.phar && chmod +x /usr/bin/composer
 
-# timezone
-RUN echo "Europe/Berlin" | tee /etc/timezone
-RUN dpkg-reconfigure --frontend noninteractive tzdata
-
 # alias
 RUN echo "alias ll='ls $LS_OPTIONS -la --color=auto'" >>  /etc/profile
 RUN echo "alias jen='cd /var/jenkins_home/'" >>  /etc/profile
