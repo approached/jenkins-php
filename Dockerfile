@@ -68,6 +68,12 @@ RUN apt-get -qqy install \
 # composer
 RUN wget -q -O /usr/bin/composer https://getcomposer.org/composer.phar && chmod +x /usr/bin/composer
 
+# ansible
+RUN sh -c 'echo "deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main" | tee /etc/apt/sources.list.d/ansible.list'
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367
+RUN apt update
+RUN apt install ansible
+
 # alias
 RUN echo "alias ll='ls $LS_OPTIONS -la --color=auto'" >>  /etc/profile
 RUN echo "alias jen='cd /var/jenkins_home/'" >>  /etc/profile
@@ -75,11 +81,10 @@ RUN echo "" >>  /etc/profile
 RUN echo "# color prompt" >>  /etc/profile
 RUN echo "force_color_prompt=ye" >>  /etc/profile
 RUN echo "PS1='${debian_chroot:+($debian_chroot)}\[\033[01;31m\]\u\[\033[01;33m\]@\[\033[01;36m\]\h \[\033[01;33m\]\w \[\033[01;35m\]\$ \[\033[00m\]'" >>  /etc/profile
-RUN source /etc/profile
 
 # drop back to the regular jenkins user - good practice
 USER jenkins
 
 # install jenkins-php recommended plugins https://plugins.jenkins.io/ - https://updates.jenkins.io/2.164/latest/
-RUN install-plugins.sh credentials-binding github-branch-source blueocean thinBackup slack workflow-aggregator \
+RUN install-plugins.sh ansible credentials-binding github-branch-source blueocean thinBackup slack workflow-aggregator \
     checkstyle clover crap4j dry htmlpublisher jdepend plot pmd violations warnings xunit
