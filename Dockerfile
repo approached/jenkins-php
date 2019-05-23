@@ -32,7 +32,8 @@ RUN apt-get -qqy install \
     php7.2-common \
     php7.2-bz2 \
     php7.2-mbstring \
-    php7.2-zip
+    php7.2-zip \
+    php7.2-xdebug
 
 # nodejs
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
@@ -49,6 +50,7 @@ RUN npm install -g gulp
 
 # meta packages
 RUN apt-get -qqy install \
+    aptitude \
     sqlite3 \
     imagemagick \
     git \
