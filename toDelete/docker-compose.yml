@@ -1,6 +1,0 @@
-jenkins:
-  build: .
-  ports:
-    - "5000:8080"
-  volumes:
-    - ./data:/var/lib/jenkins/
