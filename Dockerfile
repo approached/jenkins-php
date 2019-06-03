@@ -77,21 +77,16 @@ RUN echo "PS1='${debian_chroot:+($debian_chroot)}\[\033[01;31m\]\u\[\033[01;33m\
 # drop back to the regular jenkins user - good practice
 USER jenkins
 
-# install jenkins-php recommended plugins https://plugins.jenkins.io/ - https://updates.jenkins.io/2.164/latest/
+# install jenkins plugins
 RUN install-plugins.sh \
     credentials-binding \
     github-branch-source \
     blueocean \
     slack \
     workflow-aggregator \
-    checkstyle \
     clover \
-    crap4j \
-    dry \
     htmlpublisher \
     jdepend \
     plot \
     pmd \
-    violations \
-    warnings \
     xunit
