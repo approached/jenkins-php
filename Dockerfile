@@ -20,15 +20,13 @@ RUN apt-get -qqy install \
     php7.2-imagick \
     php7.2-mysql \
     php7.2-gd \
-    php7.2-phpdbg \
     php7.2-curl \
     php7.2-sqlite3 \
     php7.2-xsl \
     php7.2-common \
     php7.2-bz2 \
     php7.2-mbstring \
-    php7.2-zip \
-    php7.2-xdebug
+    php7.2-zip
 
 # nodejs
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
