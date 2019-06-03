@@ -5,7 +5,7 @@ MAINTAINER Alexej Kloos "alexejkloos@gmail.com"
 # update
 USER root
 RUN apt-get update
-RUN apt-get upgrade
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y upgrade
 
 # php
 RUN apt-get install -qqy ca-certificates apt-transport-https
