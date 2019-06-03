@@ -81,6 +81,7 @@ USER jenkins
 RUN install-plugins.sh \
     credentials-binding \
     github-branch-source \
+    warnings-ng \
     blueocean \
     slack \
     workflow-aggregator \
