@@ -20,17 +20,6 @@ Install Docker: https://docs.docker.com/install/linux/docker-ce/ubuntu/
 
 Install Docker Compose: https://docs.docker.com/compose/install/
 
-All container and images delete
- ```
- #!/bin/bash
- # Stop all containers
- docker stop $(docker ps -a -q)
- # Delete all containers
- docker rm $(docker ps -a -q)
- # Delete all images
- docker rmi $(docker images -q)
- ```
-
 Backup data: `./backup.sh`
 
 Delete docker stuff: `./delete.sh`
